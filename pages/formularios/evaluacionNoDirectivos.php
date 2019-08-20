@@ -24,7 +24,11 @@
   <!-- endinject -->
   <link rel="shortcut icon" href="../../images/favicon.png" />
 </head>
-
+<style>
+.inputs{
+	border-color:#000000;
+}
+</style>
 <body>
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
@@ -63,7 +67,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Número de Documento:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="numeroDocumento"/>
+                            <input type="text" class="form-control inputs" placeholder="Ingrese documento" name="numeroDocumento"/>
                           </div>
                         </div>
                       </div>
@@ -71,7 +75,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del trabajador:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="nombreCompleto"/>
+                            <input type="text" class="form-control inputs" placeholder="Ingrese su nombre" name="nombreCompleto"/>
                           </div>
                         </div>
                       </div>
@@ -79,7 +83,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del evaluador y/o jefe inmediato:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="nombreJefe" />
+                            <input type="text" class="form-control inputs" placeholder="Ingrese jefe inmediato" name="nombreJefe" />
                           </div>
                         </div>
                       </div>
@@ -87,7 +91,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Fecha de evaluación</label>
                           <div class="col-sm-8">
-                            <input class="form-control" placeholder="dd/mm/yyyy" name="fechaEvaluacion"/>
+                            <input class="form-control inputs" placeholder="dd/mm/yyyy" name="fechaEvaluacion"/>
                           </div>
                         </div>
                       </div>
@@ -95,7 +99,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Periodo evaluado:</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="periodoEvaluado" value="2018"/>
+                            <input type="text" class="form-control inputs" name="periodoEvaluado" value="2018"/>
 							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
 							<input type="hidden" class="form-control" name="evaluador" value="A"/>
                           </div>
