@@ -1,6 +1,8 @@
 ﻿<?php
  include '../conexion/mysql.php';
  include '../funciones/source.php';
+ include('../funciones/funciones.php');
+ session_start();
 ?>
 
 <!DOCTYPE html>
@@ -35,9 +37,8 @@
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       
       <div class="navbar-menu-wrapper d-flex align-items-center"> 
-	
-		<h2>EVALUACIÓN DEL DESEMPEÑO CARGOS NO DIRECTIVOS</h2>       
-
+		   
+		<h2>Evaluación del desempeño cargos no directivos</h2>  
       </div>
 	  
     </nav>
@@ -67,7 +68,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Número de Documento:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control inputs" placeholder="Ingrese documento" name="numeroDocumento"/>
+                            <input type="text" class="form-control inputs" value="<?php echo $_SESSION['usuario'];?>" readonly="readonly" placeholder="Ingrese documento" name="numeroDocumento"/>
                           </div>
                         </div>
                       </div>
@@ -75,7 +76,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del trabajador:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control inputs" placeholder="Ingrese su nombre" name="nombreCompleto"/>
+                            <input type="text" class="form-control inputs" value="<?php echo $_SESSION['nombreUsuario']; ?>" readonly="readonly" placeholder="Ingrese su nombre" name="nombreCompleto"/>
                           </div>
                         </div>
                       </div>
@@ -83,15 +84,21 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del evaluador y/o jefe inmediato:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control inputs" placeholder="Ingrese jefe inmediato" name="nombreJefe" />
-                          </div>
+                           
+							<select class="form-control inputs" name="documentoJefe">
+							<?php
+								TraerJefes($_SESSION["cargo"]);
+							?>
+							</select>
+						  </div>
+
                         </div>
                       </div>
 					  <div class="col-md-6">
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Fecha de evaluación</label>
                           <div class="col-sm-8">
-                            <input value="<?php echo date('Y/m/d'); ?>" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" name="fechaEvaluacion"/>
+                            <input value="<?php echo date('Y-m-d'); ?>" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" name="fechaEvaluacion"/>
                           </div>
                         </div>
                       </div>
@@ -99,9 +106,13 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Periodo evaluado:</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control inputs" name="periodoEvaluado" value="2018"/>
-							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
-							<input type="hidden" class="form-control" name="evaluador" value="A"/>
+							<select class="form-control inputs" name="periodoEvaluado" >
+							<?php
+								ListaPeriodos();
+							?>
+							</select>
+							<input type="hidden" class="form-control" name="tipoFormulario" value="<?php echo tipoFormulario(2); ?>"/>
+							<input type="hidden" class="form-control" name="evaluador" value="1"/>
                           </div>
                         </div>
                       </div>

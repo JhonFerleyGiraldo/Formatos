@@ -15,12 +15,15 @@
     $resultado= mysqli_query($link ,$consulta)or die('Error al consultar usuario');
 
     $cargo=null;
+    $nombreCompleto=null;
 
     while ($registro = mysqli_fetch_array($resultado)){
         $cargo=$registro["cargo"];
+        $nombreCompleto=$registro["nombres"] . " " . $registro["apellidos"];
     }
 
     $_SESSION["cargo"]=$cargo;
+    $_SESSION["nombreUsuario"]=$nombreCompleto;
 
     enviarInicioApp($documento);
 
