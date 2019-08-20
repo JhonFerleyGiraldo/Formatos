@@ -91,7 +91,9 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Fecha de evaluación</label>
                           <div class="col-sm-8">
-                            <input class="form-control inputs" placeholder="dd/mm/yyyy" name="fechaEvaluacion"/>
+
+                            <input value="<?php echo date('Y/m/d'); ?>" class="form-control" placeholder="dd/mm/yyyy" readonly="readonly" name="fechaEvaluacion"/>
+
                           </div>
                         </div>
                       </div>
