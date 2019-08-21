@@ -3,6 +3,10 @@
  include '../funciones/source.php';
  include('../funciones/funciones.php');
  session_start();
+
+    if(!isset($_SESSION["usuario"])){
+        header("location:../login/index.php");
+    }
 ?>
 
 <!DOCTYPE html>

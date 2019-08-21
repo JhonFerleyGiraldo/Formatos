@@ -1,7 +1,10 @@
 ﻿<?php
  include '../conexion/mysql.php';
  include('../funciones/funciones.php');
- 
+ session_start();
+ if(!isset($_SESSION["usuario"])){
+	header("location:../login/index.php");
+}
 
 	
 	$numeroDocumento = $_POST['numeroDocumento'];//documento del empleado
@@ -22,14 +25,14 @@
 		$_POST['d41'], $_POST['d42'], $_POST['d43'], $_POST['d44'], $_POST['d45'], $_POST['d46']);
 	
 	//Inserta los datos generales del formulario
-	$consulta = "INSERT INTO tbl_detalle ( empleador, jefe, periodo, fechaEva, fechaUltima, formularioTipoCargo)
-				 VALUES ('$usuario', '$jefe', '$periodoEvaluado','$fechaEvalua' ,'$fechaEvalua' , '$tipoFormulario')";			 
+	$consulta = "INSERT INTO tbl_detalle ( empleado, jefe, periodo, fechaEva, formularioTipoCargo)
+				 VALUES ('$usuario', '$jefe', '$periodoEvaluado','$fechaEvalua', '$tipoFormulario')";			 
 
 	mysqli_query($link, $consulta);
 	
 
 	//Se selecciona el codigo de identificación del formulario anterior en la tabla tb_detalles
-	$consulta = "SELECT id FROM tbl_detalle WHERE empleador = '$usuario' AND periodo = '$periodoEvaluado' AND formularioTipoCargo = '$tipoFormulario'";
+	$consulta = "SELECT id FROM tbl_detalle WHERE empleado = '$usuario' AND periodo = '$periodoEvaluado' AND formularioTipoCargo = '$tipoFormulario'";
 	
 
 	
@@ -42,8 +45,8 @@
 	
 		
 
-//Se registran los valores de la encuesta en la tabla tb_encuestas
-$descriptor = 2;
+//Se registran los valores de la encuesta en la tabla tbl_evaluacion
+$descriptor = 2;//se inicia en 2 ya que es el primer registro en la tabla descriptores
 foreach ($descriptores as $registro) {
 	
 	$valor = $registro;		
@@ -52,13 +55,15 @@ foreach ($descriptores as $registro) {
 				 VALUES ('$idDetalle', '$descriptor', '$evaluador', '$valor')";
 			 
 	mysqli_query($link,$consulta);
-	echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
+	//echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
 			 
 	//echo "$contador. - $registro.<br />\n";
 	$descriptor = $descriptor + 1;
 }
 
 	
+
+session_destroy();
 
 								
 ?>
@@ -97,7 +102,7 @@ foreach ($descriptores as $registro) {
         
         <!-- Modal body -->
         <div class="modal-body">
-          Su encuesta fue registrada satisfactoriamente.
+          Su evaluación fue registrada satisfactoriamente.
         </div>
         
         <!-- Modal footer -->

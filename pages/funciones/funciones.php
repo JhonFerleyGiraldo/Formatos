@@ -132,4 +132,54 @@
         }
     }
 
+
+    function ValidarEvaluacionPorPeriodo($usuario,$periodoActual){
+        try{
+            include("../conexion/mysql.php");
+
+            $consulta="SELECT * FROM tbl_detalle WHERE empleado='$usuario' AND YEAR(fechaEva)='$periodoActual'";
+            
+            $resultado= mysqli_query($link ,$consulta);
+
+            $bandera=false;
+                    
+            while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+            $bandera=true;
+
+            }        
+            
+            return $bandera;
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
+
+    function getNombreCargo($codigoCargo){
+        try{
+            include("../conexion/mysql.php");
+
+            $consulta="SELECT descripcion FROM tbl_cargo WHERE id='$codigoCargo'";
+            
+            $resultado= mysqli_query($link ,$consulta);
+
+            $nombre="";
+                    
+            while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+            $nombre=$valores["descripcion"];
+
+            }        
+            
+            return $nombre;
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
 ?>
