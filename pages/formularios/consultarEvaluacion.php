@@ -21,13 +21,13 @@
 	$consulta = "INSERT INTO TB_DETALLES (NUM_IDEmpleado, NVA_NombreEmpleado, NVA_NombreJefe, VAR_PeriodoEva, CAR_TipoFormulario)
 				 VALUES ('$numeroDocumento', '$nombreCompleto', '$nombreJefe', '$periodoEvaluado', '$tipoFormulario')";			 
 	
-	mysql_query($consulta)or die('A error occured: Insertando en la tabla detalles');
+	mysqli_query($consulta)or die('A error occured: Insertando en la tabla detalles');
 	
 	//Se selecciona el codigo de identificación del formulario anterior en la tabla tb_detalles
 	$consulta = "SELECT NUM_ID FROM TB_DETALLES WHERE NUM_IDEmpleado = '$numeroDocumento' AND VAR_PeriodoEva = '$periodoEvaluado' AND CAR_TipoFormulario = '$tipoFormulario'";
 	
-	$resultado = mysql_query($consulta) or die('A error occured: Consultando ID de formulario en la tabla Detalles');
-		while ($registro = mysql_fetch_array($resultado)){
+	$resultado = mysqli_query($consulta) or die('A error occured: Consultando ID de formulario en la tabla Detalles');
+		while ($registro = mysqli_fetch_array($resultado)){
 			$idDetalle = $registro[0];
 		}	
 	
@@ -40,7 +40,7 @@
 		$consulta = "INSERT INTO TB_EVALUACIONES (NUM_ID_DETALLE, NUM_ID_DESCRIPTOR, CAR_EVALUADOR, NVA_VALOR)
 				 VALUES ('$idDetalle', '$descriptor', '$evaluador', '$valor')";
 				 
-		mysql_query($consulta)or die('A error occured: Insertando respuesta en la tabla TB_EVALUACIONES');
+		mysqli_query($consulta)or die('A error occured: Insertando respuesta en la tabla TB_EVALUACIONES');
 				 
 		//echo "$contador. - $registro.<br />\n";
 		$descriptor = $descriptor + 1;

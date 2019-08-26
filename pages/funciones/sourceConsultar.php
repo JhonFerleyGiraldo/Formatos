@@ -1,21 +1,27 @@
 ﻿
 <?php
 
+	include("../conexion/mysql.php");
+	include("../funciones/funciones.php");
 
-	 $numeroDocumento = '12345';
-	 $periodoEvaluado = '2019';
-	 $tipoFormulario = 'N';
+	 $numeroDocumento = $_GET["documento"];
+	 $codigoUsuario=obtenerCodigoUsuario($numeroDocumento);
+	 $periodoEvaluado = $_GET["periodo"];
+	 $tipoFormulario = 2;
+	 $idDetalle=$_GET["id"];
 	 
 	 //Consultar datos básicos del formulario 
-	 $consulta = "SELECT NUM_IDEmpleado, NVA_NombreEmpleado, NVA_NombreJefe, VAR_PeriodoEva, FEC_FechaEva, CAR_TipoFormulario, NUM_ID
-				 FROM TB_DETALLES
-				 WHERE NUM_IDEmpleado = '$numeroDocumento' AND VAR_PeriodoEva = '$periodoEvaluado' AND CAR_TipoFormulario = '$tipoFormulario'";			 
+	 $consulta = "	SELECT empleado, jefe, periodo, fechaEva, fechaUltima, formularioTipoCargo,id
+				 	FROM tbl_detalle
+				 	WHERE id='$idDetalle' AND empleado = '$codigoUsuario' AND periodo = '$periodoEvaluado' AND formularioTipoCargo = '$tipoFormulario'";			 
 	
-	$resultado = mysql_query($consulta) or die('A error occured: Consultando datos básicos de formulario en la tabla Detalles');
+	$resultado = mysqli_query($link,$consulta) or die('A error occured: Consultando datos básicos de formulario en la tabla Detalles');
 	
-	while ($registro = mysql_fetch_array($resultado)){
+	while ($registro = mysqli_fetch_array($resultado)){
 		$datosBasicos = $registro;
 	}
+
+	
 
 
 	function encabezadosRespuestas()
@@ -90,15 +96,18 @@
 	
 	function construirFormulario($idDatosBasicos)
 	{
+
+		include("../conexion/mysql.php");
+
 		$idFormulario = 1;
 		
 		//Consultar Grupos del Formulario 
-		$consulta = "SELECT * FROM TB_GRUPOS
-					 WHERE NUM_IDFormulario = '$idFormulario'";			 
+		$consulta = "SELECT * FROM tbl_grupo
+					 WHERE id = '$idFormulario'";			 
 		
-		$resultadoGrup = mysql_query($consulta) or die('A error occured: Consultando  ID de formulario en la tabla TB_GRUPOS');
+		$resultadoGrup = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de formulario en la tabla TB_GRUPOS');
 		
-		while ($registroGrup = mysql_fetch_array($resultadoGrup)){
+		while ($registroGrup = mysqli_fetch_array($resultadoGrup)){
 			$gruposFormulario = $registroGrup;
 			?>
 				<div class="content-wrapper">
@@ -108,14 +117,16 @@
 						<div class="card-body">   
 						<h3 class=""><?php echo "$gruposFormulario[2] $gruposFormulario[3]%"; ?></h3>							   							
 							<?php 
+							
 								$idGrupo = $gruposFormulario[0];
+								
 								//Consultar Competencias del Grupo 
-								$consulta = "SELECT * FROM TB_COMPETENCIAS
-											 WHERE NUM_ID_Grupo = '$idGrupo'";			 
+								$consulta = "SELECT * FROM tbl_competencia
+											 WHERE id = '$idGrupo'";			 
 								
-								$resultadoComp = mysql_query($consulta) or die('A error occured: Consultando  ID de grupo en la tabla TB_COMPETENCIAS');
+								$resultadoComp = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de grupo en la tabla TB_COMPETENCIAS');
 								
-								while ($registroComp = mysql_fetch_array($resultadoComp)){
+								while ($registroComp = mysqli_fetch_array($resultadoComp)){
 									$competenciasGrupo = $registroComp;
 									?>
 										<br>
@@ -128,28 +139,30 @@
 													encabezadosRespuestas();
 
 													$idCompetencia = $competenciasGrupo[0];
+												
 													//Consultar descriptores de la competencia 
-													$consulta = "SELECT * FROM TB_DESCRIPTORES
-																 WHERE NUM_ID_Competencia = '$idCompetencia'";			 
+													$consulta = "SELECT * FROM tbl_descriptor
+																 WHERE competencia = '$idCompetencia'";			 
 													
-													$resultadoDesc = mysql_query($consulta) or die('A error occured: Consultando  ID de competencia en la tabla TB_DESCRIPTORES');
+													$resultadoDesc = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de competencia en la tabla TB_DESCRIPTORES');
 													
-													while ($registroDesc = mysql_fetch_array($resultadoDesc)){
+													while ($registroDesc = mysqli_fetch_array($resultadoDesc)){
 														$descriptoresCompetencia = $registroDesc;
 														
 														descripcion($descriptoresCompetencia[2]);
 														
 														$idDescriptor = $descriptoresCompetencia[0];
+
 														//Consultar respuesta 
-														$consulta = "SELECT * FROM TB_EVALUACIONES
-																	 WHERE NUM_ID_DETALLE = '$idDatosBasicos' AND NUM_ID_Descriptor = '$idDescriptor' AND CAR_Evaluador = 'A'";			 
+														$consulta = "SELECT * FROM tbl_evaluacion
+																	 WHERE detalle = '$idDatosBasicos' AND descriptor = '$idDescriptor' AND evaluador = 1";			 
 				
-														$resultadoEva = mysql_query($consulta) or die('A error occured: Consultando  ID de descriptor en la tabla TB_EVALUACIONES');
+														$resultadoEva = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de descriptor en la tabla TB_EVALUACIONES');
 														
-														while ($registroEva = mysql_fetch_array($resultadoEva)){
+														while ($registroEva = mysqli_fetch_array($resultadoEva)){
 															$evaluacionDescriptor = $registroEva;
 															//Parámetros idDetalle, idDescriptor, Evaluador, Valor
-															botonRadio($datosBasicos[0], $idDescriptor, 'A',  $evaluacionDescriptor[4]);
+															botonRadio($idDatosBasicos, $idDescriptor, 'A',  $evaluacionDescriptor[4]);
 														}															
 													}	
 												?>
@@ -166,5 +179,59 @@
 				</div>
 			<?php
 		}
+	}
+
+
+
+	function getDocumentoUsuario($codigoUsuario){
+		include("../conexion/mysql.php");
+		$consulta = "	SELECT usuario
+				 	FROM tbl_usuario
+				 	WHERE id = '$codigoUsuario' ";			 
+	
+		$resultado = mysqli_query($link,$consulta) or die('A error occured: Consultando cedula usuario');
+			
+		while ($registro = mysqli_fetch_array($resultado)){
+			$cedula = $registro;		
+		}
+		
+
+		return $cedula[0];
+	}
+
+	function getNombreUsuario($cedula){
+		include("../conexion/mysql.php");
+		$consulta = "	SELECT nombres,apellidos
+				 	FROM tbl_persona
+				 	WHERE documento = '$cedula' ";			 
+	
+		$resultado = mysqli_query($link,$consulta) or die('A error occured: Consultando cedula usuario');
+			
+		while ($registro = mysqli_fetch_array($resultado)){
+			$nombre = $registro[0];		
+			$apellido = $registro[1];
+		}
+		
+
+		return $nombre . ' ' . $apellido;
+	}
+
+
+
+	function getPeriodo($codigoPeriodo){
+		include("../conexion/mysql.php");
+		$consulta = "	SELECT descripcion
+				 	FROM tbl_periodo
+				 	WHERE id = '$codigoPeriodo' ";			 
+	
+		$resultado = mysqli_query($link,$consulta) or die('A error occured: Consultando cedula usuario');
+			
+		while ($registro = mysqli_fetch_array($resultado)){
+			$periodo = $registro[0];		
+			
+		}
+		
+
+		return $periodo;
 	}
 ?>

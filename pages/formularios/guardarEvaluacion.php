@@ -1,11 +1,10 @@
-﻿<?php
+<?php
+ session_start();
  include '../conexion/mysql.php';
  include('../funciones/funciones.php');
- session_start();
  if(!isset($_SESSION["usuario"])){
 	header("location:../login/index.php");
 }
-
 	
 	$numeroDocumento = $_POST['numeroDocumento'];//documento del empleado
 	$documentoJefe = $_POST['documentoJefe'];//documento del jefe
@@ -28,7 +27,7 @@
 	$consulta = "INSERT INTO tbl_detalle ( empleado, jefe, periodo, fechaEva, formularioTipoCargo)
 				 VALUES ('$usuario', '$jefe', '$periodoEvaluado','$fechaEvalua', '$tipoFormulario')";			 
 
-	mysqli_query($link, $consulta);
+	mysqli_query($link, $consulta)or die('A error occured: insertando en la tabla Detalles');
 	
 
 	//Se selecciona el codigo de identificación del formulario anterior en la tabla tb_detalles
@@ -53,17 +52,17 @@ foreach ($descriptores as $registro) {
 	
 	$consulta = "INSERT INTO tbl_evaluacion (detalle, descriptor, evaluador, valor)
 				 VALUES ('$idDetalle', '$descriptor', '$evaluador', '$valor')";
-			 
-	mysqli_query($link,$consulta);
+	echo $idDetalle . "<br>";
+	echo $descriptor . "<br>";
+	echo $evaluador . "<br>";	
+	echo $valor . "<br>";	 
+	mysqli_query($link,$consulta) or die('A error occured: Insertando evaluacion');
 	//echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
 			 
 	//echo "$contador. - $registro.<br />\n";
 	$descriptor = $descriptor + 1;
 }
 
-	
-
-session_destroy();
 
 								
 ?>
@@ -128,7 +127,26 @@ $(document).ready(function() {
   });
 
 $("#cerrarModal").click(function(){
-	window.location.href="../login/index.php";
+
+	<?php
+		$cargo=$_SESSION["cargo"];
+		$bandera;
+		if($cargo==1){
+			$bandera="true";
+		}else{
+			$bandera="false";
+		}
+	?>
+	var bandera= <?php echo $bandera; ?>;
+	if(bandera){
+
+		
+		window.location.href="../login/index.php";
+	}else{
+	
+		window.location.href="../formularios/inicioJefe.php";
+	}
+
 });
 
 </script>

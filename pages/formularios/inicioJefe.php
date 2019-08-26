@@ -7,7 +7,7 @@
   }
 
   include("../funciones/funciones.php");
-
+  
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +28,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
   <!-- endinject -->
-  <link rel="shortcut icon" href="images/favicon.png" />
+ 
 </head>
 
 <body>
@@ -227,9 +227,9 @@
                   </div>
                 </div>
               </div>
-              <button class="btn btn-success btn-block">Autoevaluación
+              <a  href="../formularios/evaluacionNoDirectivos.php" style="text-decoration:none;"><button class="btn btn-success btn-block">Autoevaluación
                 <i class="mdi mdi-plus"></i>
-              </button>
+              </button></a>
             </div>
           </li>
           <!-- se comenta el menu que no se necesita
@@ -393,63 +393,42 @@
                     <table class="table table-hover">
                       <thead>
                         <tr>
+                          <th>Documento</th>
                           <th>Persona</th>
                           <th>Cargo</th>
+                          <th>Periodo</th>
                           <th>Fecha Eva.</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
+                      <?php
+                     
+                      $resultado=getListadoEvaluacionesxJefe(obtenerCodigoUsuario($_SESSION["usuario"]));
+                      ?>
                       <tbody>
-                        <tr>
-                          <td>Jacob</td>
-                          <td>Photoshop</td>
-                          <td class="text-danger"> 28.76%
-                            <i class="mdi mdi-arrow-down"></i>
-                          </td>
-                          <td>
-                            <label class="badge badge-danger">Pending</label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Messsy</td>
-                          <td>Flash</td>
-                          <td class="text-danger"> 21.06%
-                            <i class="mdi mdi-arrow-down"></i>
-                          </td>
-                          <td>
-                            <label class="badge badge-warning">In progress</label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>John</td>
-                          <td>Premier</td>
-                          <td class="text-danger"> 35.00%
-                            <i class="mdi mdi-arrow-down"></i>
-                          </td>
-                          <td>
-                            <label class="badge badge-info">Fixed</label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Peter</td>
-                          <td>After effects</td>
-                          <td class="text-success"> 82.00%
-                            <i class="mdi mdi-arrow-up"></i>
-                          </td>
-                          <td>
-                            <label class="badge badge-success">Completed</label>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td>Dave</td>
-                          <td>53275535</td>
-                          <td class="text-success"> 98.05%
-                            <i class="mdi mdi-arrow-up"></i>
-                          </td>
-                          <td>
-                            <label class="badge badge-warning">In progress</label>
-                          </td>
-                        </tr>
+
+                        <?php
+                        
+                          while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+                           
+                           echo "<tr>
+                                  <td>$valores[1]</td>
+                                  <td>$valores[2]</td>
+                                  <td class=''> $valores[3]</td>
+                                  <td class=''> $valores[5]</td>
+                                  <td class=''> $valores[6]</td>
+                                  <td>
+                                    <a href='consultarevaluacionnodirectivos.php?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>
+                                  </td>
+                                </tr>";
+                           
+                
+                            } 
+                        ?>
+
+                        
+                        
                       </tbody>
                     </table>
                   </div>

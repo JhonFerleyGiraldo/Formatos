@@ -1,4 +1,5 @@
 ﻿<?php
+session_start();
  include '../conexion/mysql.php';
  include '../funciones/sourceConsultar.php';
 ?>
@@ -63,7 +64,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Número de Documento:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="numeroDocumento" value="<?php echo $datosBasicos[0]; ?>"/>
+                            <input type="text" class="form-control" readonly name="numeroDocumento" value="<?php echo getDocumentoUsuario($datosBasicos[0]);  ?>"/>
                           </div>
                         </div>
                       </div>
@@ -71,7 +72,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del trabajador:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="nombreCompleto" value="<?php echo $datosBasicos[1]; ?>"/>
+                            <input type="text" class="form-control" readonly name="nombreCompleto" value="<?php echo getNombreUsuario(getDocumentoUsuario($datosBasicos[0])); ?>"/>
                           </div>
                         </div>
                       </div>
@@ -79,7 +80,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del evaluador y/o jefe inmediato:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" name="nombreJefe" value="<?php echo $datosBasicos[2]; ?>"/>
+                            <input type="text" class="form-control" readonly name="nombreJefe" value="<?php echo $_SESSION["nombreUsuario"]; ?>"/>
                           </div>
                         </div>
                       </div>
@@ -87,7 +88,7 @@
                         <div class="form-group row">
                           <label class="col-sm-4 col-form-label">Fecha de evaluación</label>
                           <div class="col-sm-8">
-                            <input class="form-control" name="fechaEvaluacion" value="<?php echo $datosBasicos[4]; ?>"/>
+                            <input class="form-control" name="fechaEvaluacion" readonly value="<?php echo $datosBasicos[3]; ?>"/>
                           </div>
                         </div>
                       </div>
@@ -95,7 +96,7 @@
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Periodo evaluado:</label>
                           <div class="col-sm-9">
-                            <input type="text" class="form-control" name="periodoEvaluado" value="<?php echo $datosBasicos[3]; ?>"/>
+                            <input type="text" class="form-control" readonly name="periodoEvaluado" value="<?php echo getPeriodo($datosBasicos[2]); ?>"/>
 							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
 							<input type="hidden" class="form-control" name="evaluador" value="A"/>
                           </div>

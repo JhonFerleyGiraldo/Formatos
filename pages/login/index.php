@@ -1,8 +1,52 @@
 <?php
+session_start();
+session_destroy();
+session_start();
+include("../conexion/mysql.php");
+  if(isset($_POST["user"]) && isset($_POST["pass"]))
+        {
+          //Llamamos la funcion login
+          if(login($_POST["user"],$_POST["pass"])){
+			echo "<script type='text/javascript'>location.href='../inicio/index.php';</script>";
+            
+		  }else{ 
+		    include("errorLogin.php");
+          }
 
-  session_start();
-  session_destroy();
+        }
+        
+        //Funcion encargada de validar el login
+        function login($user,$pass){
+          
+          try{
+            include("../conexion/mysql.php");
 
+            $consulta="SELECT * FROM tbl_usuario WHERE usuario='$user' AND clave='$pass'";
+  
+            $resultado= mysqli_query($link ,$consulta)or die('Error al consultar usuario');
+            
+            $perfil=null;
+            $contador=0;
+            while ($registro = mysqli_fetch_array($resultado)){
+              $perfil=$registro["perfil"];
+             $contador++;
+            }
+
+            
+  
+            if($contador){
+              
+              $_SESSION["perfil"]=$perfil;
+					    $_SESSION["usuario"]=$user;//se almacena la sesion del usuario 
+              return true;
+            }else{
+              return false;
+            }
+          }catch(Exception $e){
+            echo "ERROR" . $e->getMessage();
+          }
+          
+        }
 ?>
 
 <!DOCTYPE html>
@@ -27,42 +71,11 @@
 
 </style>
 <body>
-    <?php
-      require_once("../conexion/mysql.php");
-    ?>
 
 <!--Ventana modal para error de usuario -->
 <div class="container">
   
-  <!-- Button to Open the Modal -->
-  <button type="button" id="abrirModal" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
-    Open modal
-  </button>
-
-  <!-- The Modal -->
-  <div class="modal fade" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">Validación</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <!-- Modal body -->
-        <div class="modal-body">
-          Usuario o contraseña incorrectos, favor validar.
-        </div>
-        
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+ 
   
 </div>   
 
@@ -102,54 +115,6 @@
   </div>
 </div>
 
-    <?php
-
-        //Se valida que se ejecute el metodo post
-        if(isset($_POST["user"]) && isset($_POST["pass"]))
-        {
-          //Llamamos la funcion login
-          if(login($_POST["user"],$_POST["pass"])){
-            header("location:../inicio/index.php");
-          }else{
-            echo "<script>$('#abrirModal').click();</script>";
-          }
-
-        }
-        
-        //Funcion encargada de validar el login
-        function login($user,$pass){
-          
-          try{
-            include("../conexion/mysql.php");
-
-            $consulta="SELECT * FROM tbl_usuario WHERE usuario='$user' AND clave='$pass'";
-  
-            $resultado= mysqli_query($link ,$consulta)or die('Error al consultar usuario');
-            
-            $perfil=null;
-            $contador=0;
-            while ($registro = mysqli_fetch_array($resultado)){
-              $perfil=$registro["perfil"];
-             $contador++;
-            }
-
-            
-  
-            if($contador){
-              session_start();
-              $_SESSION["perfil"]=$perfil;
-					    $_SESSION["usuario"]=$user;//se almacena la sesion del usuario 
-              return true;
-            }else{
-              return false;
-            }
-          }catch(Exception $e){
-            echo "ERROR" . $e->getMessage();
-          }
-          
-        }
-
-    ?>
      
 
   </body>

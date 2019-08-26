@@ -1,9 +1,4 @@
 <?php
-
-    
-
-    //funciones php
-
     function TraerJefes($cargoUsuario){
         include("../conexion/mysql.php");
         
@@ -12,15 +7,12 @@
         switch($cargoUsuario){
 
             case 1:
-                $codigoCargoJefe=1;
+                $codigoCargoJefe=2;
             break;
-            default:
-                echo "ERROR EN LA SELECCION DE CARGO";
+            case 2:
+                $codigoCargoJefe=3;
             break;
-
         }
-
-
         try{
             $consulta="SELECT * FROM tbl_persona WHERE cargo='$codigoCargoJefe'";
             
@@ -181,5 +173,41 @@
             return false;
         }
     }
+
+    function getListadoEvaluacionesxJefe($jefe){
+        try{
+            include("../conexion/mysql.php");
+
+            $consulta=" SELECT 	
+                            D.id as 'id',
+                            P.documento as 'documento',
+                            concat(P.nombres,' ',P.apellidos) as 'persona',
+                            C.descripcion as 'cargo',
+                            PE.id as 'codPeriodo',
+                            PE.descripcion as 'periodo',
+                            D.fechaEva as 'fecha',
+                            D.fechaUltima  as 'estado'           
+                        FROM 	tbl_detalle as D inner join tbl_evaluacion as E
+                                ON E.detalle=D.id
+                                inner join tbl_usuario as U on D.empleado=U.id
+                                inner join tbl_persona as P on U.usuario=P.documento
+                                inner join tbl_cargo as C on C.id=P.cargo
+                                inner join tbl_periodo as PE on D.periodo=PE.id
+                        WHERE 	D.jefe=$jefe        
+                        GROUP BY D.id
+                        ORDER BY D.fechaEva desc";
+            
+            $resultado= mysqli_query($link ,$consulta);
+
+            return $resultado;
+                    
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+
+    }
+
 
 ?>
