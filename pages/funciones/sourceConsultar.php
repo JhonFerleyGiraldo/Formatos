@@ -68,6 +68,7 @@
 	function botonRadio($bIdDetalle, $bIdDescriptor, $bEvaluador, $bValor)
 	{
 		$contadorPpal = 1;
+		
 		while ($contadorPpal <= 2) {
 			$contador = 1;
 			?>
@@ -77,9 +78,36 @@
 					while ($contador <= 5 ){					
 						?>
 						  <div class="col-2">
-							<div class="form-radio">
+							<div class="form-radio form-radio-flat">
 							  <label class="form-check-label">
-								<input type="radio" class="form-check-input" name="<?php if($contadorPpal == 1){echo "r$bIdDescriptor";}else{echo "d$bIdDescriptor";}?>" value="<?php if($contadorPpal == 2){echo $contador;}?>" <?php if($contadorPpal == 1){ if($bValor == $contador){echo 'checked';} }else{if ($contador == 1) { echo 'checked';}} ?> >
+							
+								<input  type="radio" class="form-check-input" style="border-color:#000000;" 	
+																				name="<?php if($contadorPpal == 1){echo "r$bIdDescriptor";}else{echo "d$bIdDescriptor";}?>"
+																				value="<?php if($contadorPpal == 2){echo $contador;}?>" 
+																				
+																				<?php
+																					//se deshabilita las respuestas de el empleado
+																					if($contadorPpal==1){
+																						echo "disabled";
+																						}
+																				?>
+
+																				<?php
+																				
+																					if($contadorPpal == 1){
+																						if($bValor == $contador){
+																							echo 'checked';
+																							
+																						} 
+																					}else{
+																						if ($contador == 1){ 
+																							echo 'checked';
+																						}
+																					} 
+																					
+																				?>
+																				
+								>
 							  </label>
 							</div>
 						  </div>						
@@ -103,11 +131,12 @@
 		
 		//Consultar Grupos del Formulario 
 		$consulta = "SELECT * FROM tbl_grupo
-					 WHERE id = '$idFormulario'";			 
+					 WHERE formulario = '$idFormulario'";			 
 		
 		$resultadoGrup = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de formulario en la tabla TB_GRUPOS');
 		
 		while ($registroGrup = mysqli_fetch_array($resultadoGrup)){
+			
 			$gruposFormulario = $registroGrup;
 			?>
 				<div class="content-wrapper">
@@ -122,11 +151,12 @@
 								
 								//Consultar Competencias del Grupo 
 								$consulta = "SELECT * FROM tbl_competencia
-											 WHERE id = '$idGrupo'";			 
+											 WHERE grupo = '$idGrupo'";			 
 								
 								$resultadoComp = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de grupo en la tabla TB_COMPETENCIAS');
 								
 								while ($registroComp = mysqli_fetch_array($resultadoComp)){
+									
 									$competenciasGrupo = $registroComp;
 									?>
 										<br>
@@ -160,6 +190,7 @@
 														$resultadoEva = mysqli_query($link,$consulta) or die('A error occured: Consultando  ID de descriptor en la tabla TB_EVALUACIONES');
 														
 														while ($registroEva = mysqli_fetch_array($resultadoEva)){
+
 															$evaluacionDescriptor = $registroEva;
 															//Parámetros idDetalle, idDescriptor, Evaluador, Valor
 															botonRadio($idDatosBasicos, $idDescriptor, 'A',  $evaluacionDescriptor[4]);

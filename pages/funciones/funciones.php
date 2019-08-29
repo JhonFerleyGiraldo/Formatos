@@ -186,14 +186,16 @@
                             PE.id as 'codPeriodo',
                             PE.descripcion as 'periodo',
                             D.fechaEva as 'fecha',
-                            D.fechaUltima  as 'estado'           
+                            D.fechaUltima  as 'estado',
+                            D.revixJefe as 'revisado'           
                         FROM 	tbl_detalle as D inner join tbl_evaluacion as E
                                 ON E.detalle=D.id
                                 inner join tbl_usuario as U on D.empleado=U.id
                                 inner join tbl_persona as P on U.usuario=P.documento
                                 inner join tbl_cargo as C on C.id=P.cargo
                                 inner join tbl_periodo as PE on D.periodo=PE.id
-                        WHERE 	D.jefe=$jefe        
+                        WHERE 	D.jefe=$jefe
+                            /*AND   D.fechaUltima IS NULL*/      
                         GROUP BY D.id
                         ORDER BY D.fechaEva desc";
             

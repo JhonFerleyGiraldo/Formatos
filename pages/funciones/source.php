@@ -47,9 +47,10 @@
 				while ($contador <= 5 ){					
 					?>
 					  <div class="col-2">
-						<div class="form-radio">
+						<div class="form-radio form-radio-flat">
 						  <label class="form-check-label">
-							<input type="radio" class="form-check-input" name="<?php echo $nameRadio; ?>" value="<?php echo $contador; ?>" <?php if ($contador == 1) { echo 'checked';} ?> >
+		
+							<input type="radio" class="form-check-input" style="border-color:#000000;" name="<?php echo $nameRadio; ?>" value="<?php echo $contador; ?>" <?php if ($contador == 1) { echo 'checked';} ?> >
 						  </label>
 						</div>
 					  </div>						

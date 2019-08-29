@@ -128,6 +128,7 @@ if(ValidarEvaluacionPorPeriodo(obtenerCodigoUsuario($_SESSION["usuario"]),date('
 .inputs{
 	border-color:#000000;
 }
+
 </style>
 <body>
   <div class="container-scroller">

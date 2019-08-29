@@ -43,7 +43,7 @@ session_start();
     
       <!-- partial -->
       <div class="main-panel col-lg-12">
-	  <form class="form-sample" action="guardarEvaluacion.php" method="post">   
+	  <form class="form-sample" action="guardarEvaluacion.php?detalle=<?php echo $datosBasicos[6]; ?>" method="POST">   
 		<!-- CABECERA AUTOEVALUACION -->
         <div class="content-wrapper">
           <div class="row">    
@@ -98,7 +98,7 @@ session_start();
                           <div class="col-sm-9">
                             <input type="text" class="form-control" readonly name="periodoEvaluado" value="<?php echo getPeriodo($datosBasicos[2]); ?>"/>
 							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
-							<input type="hidden" class="form-control" name="evaluador" value="A"/>
+							<input type="hidden" class="form-control" name="evaluador" value="2"/>
                           </div>
                         </div>
                       </div>

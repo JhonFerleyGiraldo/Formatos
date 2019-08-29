@@ -394,7 +394,7 @@
                       <thead>
                         <tr>
                           <th>Documento</th>
-                          <th>Persona</th>
+                          <th>Nombre</th>
                           <th>Cargo</th>
                           <th>Periodo</th>
                           <th>Fecha Eva.</th>
@@ -410,17 +410,22 @@
                         <?php
                         
                           while ($valores = mysqli_fetch_array($resultado)) {
-                                    
-                           
+
                            echo "<tr>
                                   <td>$valores[1]</td>
                                   <td>$valores[2]</td>
                                   <td class=''> $valores[3]</td>
                                   <td class=''> $valores[5]</td>
                                   <td class=''> $valores[6]</td>
-                                  <td>
-                                    <a href='consultarevaluacionnodirectivos.php?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>
-                                  </td>
+                                  <td>"; 
+                                    //Validamos si ya esta revisado
+                                    if($valores[8]==0){
+                                      echo "<a href='consultarevaluacionnodirectivos.php?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>";
+                                    }else{
+                                      echo "<label class='badge badge-success'>Evaluado</label>";
+                                    }
+                                    
+                                  echo "</td>
                                 </tr>";
                            
                 
