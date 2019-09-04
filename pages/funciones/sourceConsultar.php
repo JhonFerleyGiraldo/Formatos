@@ -7,7 +7,15 @@
 	 $numeroDocumento = $_GET["documento"];
 	 $codigoUsuario=obtenerCodigoUsuario($numeroDocumento);
 	 $periodoEvaluado = $_GET["periodo"];
-	 $tipoFormulario = 2;
+
+	 $tipoFormulario;
+	 //Validamos si es directivo, para saber que formulario es
+	 if(GetIsDirectivo($numeroDocumento)){
+		$tipoFormulario = 1;
+	  }else{
+		$tipoFormulario = 2;
+	  }
+	 
 	 $idDetalle=$_GET["id"];
 	 
 	 //Consultar datos básicos del formulario 
@@ -54,9 +62,9 @@
 	function descripcion($descripcion)
 	{
 		?>
-			<br><br>
+			<br><br><br><br>
 			<div class="col-4 row">
-				<p class="card-description col-md-12" style="text-align: justify;">
+				<p class="card-description col-md-12" style="text-align: justify; font-weight: 1;">
 				  <b><?php echo $descripcion; ?></b>
 				</p>
 			</div>
@@ -127,7 +135,14 @@
 
 		include("../conexion/mysql.php");
 
+		$idFormulario;
+	 //Validamos si es directivo, para saber que formulario es
+	 if(!GetIsDirectivo($_GET["documento"])){
 		$idFormulario = 1;
+	  }else{
+		$idFormulario = 2;
+	  }
+	 
 		
 		//Consultar Grupos del Formulario 
 		$consulta = "SELECT * FROM tbl_grupo
@@ -193,8 +208,9 @@
 
 															$evaluacionDescriptor = $registroEva;
 															//Parámetros idDetalle, idDescriptor, Evaluador, Valor
-															botonRadio($idDatosBasicos, $idDescriptor, 'A',  $evaluacionDescriptor[4]);
-														}															
+															botonRadio($idDatosBasicos, $idDescriptor+1, 'A',  $evaluacionDescriptor[4]);
+														}	
+																											
 													}	
 												?>
 											</div>

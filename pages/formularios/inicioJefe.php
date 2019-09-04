@@ -28,6 +28,7 @@
   <!-- inject:css -->
   <link rel="stylesheet" href="../../css/style.css">
   <!-- endinject -->
+  <link rel="icon" type="image/x-icon" href="../../images/iconos/IconPage.ico">
  
 </head>
 
@@ -36,10 +37,10 @@
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
       <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-        <a class="navbar-brand brand-logo" href="../../index.html">
+        <a class="navbar-brand brand-logo" >
           <img src="../../images/logoUCI.png" alt="logo" />
         </a>
-        <a class="navbar-brand brand-logo-mini" href="../../index.html">
+        <a class="navbar-brand brand-logo-mini" >
           <img src="../../images/logoUCI.png" alt="logo" />
         </a>
       </div>
@@ -227,7 +228,7 @@
                   </div>
                 </div>
               </div>
-              <a  href="../formularios/evaluacionNoDirectivos.php" style="text-decoration:none;"><button class="btn btn-success btn-block">Autoevaluación
+              <a  href="../formularios/<?php if(GetIsDirectivo($_SESSION['usuario'])){echo 'evaluacionDirectivos.php';}else{echo 'evaluacionNoDirectivos.php';} ?>" style="text-decoration:none;"><button class="btn btn-success btn-block">Autoevaluación
                 <i class="mdi mdi-plus"></i>
               </button></a>
             </div>
@@ -418,9 +419,16 @@
                                   <td class=''> $valores[5]</td>
                                   <td class=''> $valores[6]</td>
                                   <td>"; 
+
+                                  if(GetIsDirectivo($valores[1])){
+                                    $pagina= 'consultarEvaluacionDirectivos.php';
+                                  }else{
+                                    $pagina= 'consultarEvaluacionNoDirectivos.php';
+                                  }
+                                    
                                     //Validamos si ya esta revisado
                                     if($valores[8]==0){
-                                      echo "<a href='consultarevaluacionnodirectivos.php?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>";
+                                      echo "<a href='$pagina?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>";
                                     }else{
                                       echo "<label class='badge badge-success'>Evaluado</label>";
                                     }

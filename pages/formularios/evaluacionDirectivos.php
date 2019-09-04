@@ -135,11 +135,6 @@ if(ValidarEvaluacionPorPeriodo(obtenerCodigoUsuario($_SESSION["usuario"]),date('
 	border-color:#000000;
 }
 
-input[type=radio]{
-	border:12px solid red;
-	background:red;
-}
-
 </style>
 <body>
   <div class="container-scroller">
@@ -148,7 +143,7 @@ input[type=radio]{
       
       <div class="navbar-menu-wrapper d-flex align-items-center"> 
 		   
-		<h2>Evaluación del desempeño cargos no directivos</h2>  
+		<h2>Evaluación del desempeño cargos directivos</h2>  
       </div>
 	  
     </nav>
@@ -221,7 +216,7 @@ input[type=radio]{
 								ListaPeriodos();
 							?>
 							</select>
-							<input type="hidden" class="form-control" name="tipoFormulario" value="2"/>
+							<input type="hidden" class="form-control" name="tipoFormulario" value="1"/>
 							<input type="hidden" class="form-control" name="evaluador" value="1"/>
                           </div>
                         </div>
@@ -239,148 +234,92 @@ input[type=radio]{
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">   
-				<h3 class="">Organizacionales 15%</h3>	
+				<h3 class="">Directivas 30%</h3>	
 				  <br> 
 					<div class="row">						
-					  <h4 class="">Trabajo en equipo 5%</h4 >	
+					  <h4 class="">Liderazgo y empoderamiento 18%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
 								 encabezadosRespuestas();							
-								 descripcion('Coopera en distintas situaciones y comparte información. Aporta sugerencias, ideas y opiniones.');
+								 descripcion('Motiva permanentemente a sus colaboradores. Emprende acciones para mejorar el talento y las capacidades de su equipo de trabajo.');
 							     botonRadio('d2');
 								 
-								 descripcion('Planifica las propias acciones teniendo en cuenta la repercusión de las mismas para la consecución de los objetivos grupales.');
+								 descripcion('Mantiene los grupos de trabajo con un desarrollo conforme a los estandares establecidos y comparte las consecuencias y resultados con todos los involucrados.');
 							     botonRadio('d3');
 								 
-								 descripcion('Establece diálogo directo con los miembros del equipo, lo que permite compartir información e ideas en condiciones de respeto y cordialidad.');
+								 descripcion('Promueve la eficacia del equipo. Fija claramente objetivos de desempeño y responsabilidades, proporcionando dirección y capacitación.');
 							     botonRadio('d4');
 						
-								 descripcion('Respeta  criterios dispares y distintas opiniones del equipo.');
+								 descripcion('Aprovecha la diversidad (heterogeneidad) del equipo para lograr un valor agregado a la Institución. Combina adecuadamente situación-persona y tiempo.');
 							     botonRadio('d5');
 								 
-								 descripcion('Reconoce la interdependencia entre su trabajo y el de otros.');
-							     botonRadio('d6');
 							?>
 						</div>
                     </div>                     
 					<br>                 
                     <div class="row">						
-					  <h4 >Orientación al usuario 10%</h4 >	
+					  <h4 >Poder de negociación 4%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
 								 encabezadosRespuestas();							
-								 descripcion('Atiende y valora las necesidades y peticiones de los usuarios internos y externos.');
+								 descripcion('Se pone en el lugar del otro y anticipa sus necesidades e intereses ante una negociación.');
+							     botonRadio('d6');
+							
+								 descripcion('Logra convencer a la contra parte y vende sus ideas en beneficio de los interereses de la organización.');
 							     botonRadio('d7');
 							
-								 descripcion('Considera las necesidades de los usuarios al diseñar sus servicios.');
+								 descripcion('Logra acuerdos satisfactorios para ambas partes, basándose en criterios objetivos.');
 							     botonRadio('d8');
 							
-								 descripcion('Da respuesta oportuna a las necesidades de los usuarios de acuerdo al servicio que presta.');
+								 descripcion('Dirige y controla una discusión utilizando técnicas ganar-ganar, planifica opciones para negociar los mejores acuerdos.');
 							     botonRadio('d9');
-							
-								 descripcion('Establece diferentes canales de comunicación con el usuario para conocer sus necesidades y propuestas y responde a las mismas.');
-							     botonRadio('d10');
 								 
-								 descripcion('Conoce los deberes y derechos de los usuarios.');
-							     botonRadio('d11');
 							?>
 						</div>
-                    </div> 					
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-		<!-- FIN DE GRUPO ORGANIZACIONALES -->
-		<!-- GRUPO TÉCNICAS O PROFESIONALES -->
-		<div class="content-wrapper">
-          <div class="row">			
-            <div class="col-12 grid-margin">
-              <div class="card">
-                <div class="card-body">   
-				<h3 class="">Técnicas o profesionales 45%</h3>	
-				  <br> 
+                    </div> 
+					<br>
 					<div class="row">						
-					  <h4 class="">Orientación a los resultados 10%</h4 >	
+					  <h4 >Planeación y control 4%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
-								encabezadosRespuestas();
-								descripcion('Cumple las funciones que le han sido asignadas con oportunidad, en función de estándares, objetivos y metas 
-								  establecidas por la Institución.');
+								 encabezadosRespuestas();							
+								 descripcion('Anticipa situaciones y escenarios futuros con acierto, establece objetivos  claros y  concisos, estructurados y coherentes  con  las  metas organizacionales.');
+							     botonRadio('d10');
+							
+								 descripcion('Busca solución a los problemas, distribuye el tiempo con eficiencia, establece planes alternativos de acción y se centra en el problema y no en la persona.');
+							     botonRadio('d11');
+							
+								 descripcion('Conoce y maneja la ejecución de los procesos y sus resultados.');
 							     botonRadio('d12');
-								 
-								 descripcion('Asume la responsabilidad por sus resultados.');
+							
+								 descripcion('Define Indicadores Que le permiten realizar seguimiento a la gestion y a los palnes de accion establecidos.');
 							     botonRadio('d13');
 								 
-								descripcion('Actúa con diligencia y sentido de urgencia ante decisiones importantes, necesarias para la organización.');
+								 descripcion('Establece medidas correctivas y de mejora a los procesos con desviaciones.');
 							     botonRadio('d14');
-								 
-								descripcion('Administra los procesos establecidos para que no interfieran con la consecución de los resultados esperados.');
-							     botonRadio('d15');
-								 
-								descripcion('Realiza todas las acciones necesarias para alcanzar los objetivos propuestos, enfrentando los obstáculos que se presenten.');
-							     botonRadio('d16');
 							?>
-							<br><br>							
 						</div>
-                    </div>                     
-					<br>                 
-                    <div class="row">						
-					  <h4 >Dominio profesional o técnico 20%</h4 >	
-						<div class="row">
-							<div class="col-6 row">								
-							</div>
-							<?php
-								encabezadosRespuestas();
-								descripcion('Asesora en su campo de conocimiento, emitiendo conceptos, juicios o propuestas ajustados a lineamientos teóricos y técnicos.');
-								botonRadio('d17');
-								
-								descripcion('Se comunica de manera clara, efectiva, lógica y segura.');
-								botonRadio('d18');
-								
-								descripcion('Analiza de un modo sistemático y racional los aspectos de trabajo, basándose en la información relevante.');
-							     botonRadio('d19');
-								 
-								descripcion('Aplica reglas básicas y conceptos aprendidos.');
-							     botonRadio('d20');
-								 
-								descripcion('Identifica y reconoce con facilidad las causas de los problemas y sus posibles soluciones.');
-							     botonRadio('d21');
-							?>
-							
-						</div>
-                    </div>
-					<br> 
+                    </div> 
+					<br>
 					<div class="row">						
-					  <h4 >Trabajo seguro 15%</h4 >	
+					  <h4 >Juicio analitico 4%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
-								encabezadosRespuestas();
-								descripcion('Establece prioridades, optimiza los recursos disponibles y administra adecuadamente la información.');
-							     botonRadio('d22');
-								 
-								descripcion('Ejecuta las actividades en orden lógico para asegurar el logro de los resultados en un tiempo determinado.');
-							     botonRadio('d23');
-								 
-								descripcion('Realiza los procedimientos de acuerdo con lo establecido y atendiendo las normas de seguridad.');
-							     botonRadio('d24');
-								 
-								descripcion('Cumple con las normas de higiene y seguridad industrial, bioseguridad, seguridad y salud en el trabajo, manejo de residuos hospitalarios y seguridad del paciente.');
-							     botonRadio('d25');
-								 
-								descripcion('Identifica situaciones de riesgo potencial y sugiere acciones de prevención y mejoramiento.');
-							     botonRadio('d26');
-								 
-								descripcion('Realiza seguimiento a la información, detecta datos erróneos o ausentes y busca la información  que le permita mantener métodos de trabajo seguros y efectivos.');
-							     botonRadio('d27');
+								 encabezadosRespuestas();							
+								 descripcion('Analiza las partes de un problema o situacion paso a paso, interpretando las situaciones , hechos o datos.');
+							     botonRadio('d15');
+							
+								 descripcion('Realiza comparaciones continuamente, saca concluiones y actua conforme a lo aprendido.');
+							     botonRadio('d16');
+							
 							?>
 						</div>
                     </div> 
@@ -389,36 +328,191 @@ input[type=radio]{
             </div>
           </div>
         </div>
-		<!-- FIN DE GRUPO TÉCNICAS O PROFESIONALES -->
-		<!-- GRUPO PERSONALES -->
+		
 		<div class="content-wrapper">
           <div class="row">			
             <div class="col-12 grid-margin">
               <div class="card">
                 <div class="card-body">   
-				<h3 class="">PERSONALES 40%</h3>	
+				<h3 class="">ORGANIZACIONALES 25%</h3>	
 				  <br> 
 					<div class="row">						
-					  <h4 class="">Asertividad 15%</h4 >	
+					  <h4 class="">Trabajo en equipo 10%</h4 >	
+						<div class="row">
+							<div class="col-6 row">								
+							</div>
+							<?php
+								encabezadosRespuestas();
+								descripcion('Reconoce e identifica las habilidades y fortalezas de los miembros del equipo, optimizando resultados y logrando un rendimiento excepcional con compromiso y confianza mutua.');
+							     botonRadio('d17');
+								 
+								 descripcion('Valora y promueve el trabajo en equipo,  aprovecha  ventajas y beneficios del mismo para la consecución de objetivos Organizacionales,  prioriza las tareas que afectan el trabajo de otros.');
+							     botonRadio('d18');
+								 
+								descripcion('Lidera y participa en las reuniones establecidas por la Organización.');
+							     botonRadio('d19');
+								 
+								descripcion('Reconoce la interdependencia entre su trabajo y el de otros.');
+							     botonRadio('d20');
+								 
+								descripcion('Respeta  criterios dispares y distintas opiniones.');
+							    botonRadio('d21');
+								
+								descripcion('Establece dialogo directo con los miembros del equipo, comparte conocimientos, información, recursos y medios de trabajo.');
+							     botonRadio('d22');
+							?>
+							<br><br>							
+						</div>
+                    </div>                     
+					<br>                 
+                    <div class="row">						
+					  <h4 >Orientación al usuario 15%</h4 >	
+						<div class="row">
+							<div class="col-6 row">								
+							</div>
+							<?php
+								encabezadosRespuestas();
+								descripcion('Atiende y valora las necesidades y peticiones de los usuarios internos y externos.');
+								botonRadio('d23');
+								
+								descripcion('Considera las necesidades de los usuarios al diseñar sus servicios.');
+								botonRadio('d24');
+								
+								descripcion('Establece diferentes canales de comunicación con el usuario para conocer sus necesidades y propuestas y responde a las mismas.');
+							     botonRadio('d25');
+								 
+								descripcion('Brinda respuesta oportuna a las necesidades de los usuarios deacuerdo al servicio que presta');
+							     botonRadio('d26');
+								 
+								descripcion('Conoce los deberes y derechos de los usuarios.');
+							     botonRadio('d27');
+							?>
+							
+						</div>
+                    </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+		<div class="content-wrapper">
+          <div class="row">			
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">   
+				<h3 class="">Técnicas o profesionales 20%</h3>	
+				  <br> 
+					<div class="row">						
+					  <h4 class="">Orientación a los resultados 5%</h4 >	
+						<div class="row">
+							<div class="col-6 row">								
+							</div>
+							<?php
+								encabezadosRespuestas();
+								descripcion('Se preocupa por enriquecer su trabajo, es objetivo y atinado en la autoevaluación de su trabajo.');
+							     botonRadio('d28');
+								 
+								descripcion('Asume la responsabilidad de sus resultados.');
+							     botonRadio('d29');
+								 
+								descripcion('Asume las tareas con exigencia y rigurosidad, logrando estándares de calidad superiores a los establecidos.');
+							     botonRadio('d30');
+								 
+								descripcion('Administra los procesos establecidos para que no inter- fiera con la consecución de los resultados esperados.');
+							     botonRadio('d31');
+								 
+								descripcion('Actua con diligencia y sentido de urgencia ante desciones importantes necesarias para la organización.');
+							     botonRadio('d32');
+							?>
+						</div>
+                    </div>                     
+					<br>                 
+                    <div class="row">						
+					  <h4>Dominio profesional o técnico 10%</h4 >	
+						<div class="row">
+							<div class="col-6 row">								
+							</div>
+							<?php
+								encabezadosRespuestas();								
+								descripcion('Demuestra conocimiento amplio y suficiente respecto a su especialidad  y lo aplica efectivamente en el desempeño de su trabajo');
+							     botonRadio('d33');
+								 
+								descripcion('Se actualiza permanentemente y aporta valor a la Organización.');
+							     botonRadio('d34');
+								 
+								descripcion('Se comunica de manera clara, efectiva, lógica y segura.');
+							     botonRadio('d35');
+								 
+								descripcion('Aplica reglas básicas y conceptos aprendidos.');
+							     botonRadio('d36');
+								 
+								descripcion('Asesora en su campo de conocimiento, emitiendo conceptos, juicios o propuestas ajustadas a lineamientos teóricos y técnicos.');
+							     botonRadio('d37');
+								 
+								 descripcion('Identifica y reconoce con facilidad las causas de los problemas y sus posibes soluciones.');
+							     botonRadio('d38');
+							?>
+						</div>
+                    </div> 	
+					<br>                 
+                    <div class="row">						
+					  <h4>Trabajo seguro 5%</h4 >	
+						<div class="row">
+							<div class="col-6 row">								
+							</div>
+							<?php
+								encabezadosRespuestas();
+								descripcion('Ejecuta las actividades en orden lógico para asegurar el logro de los resultados en un tiempo determinado.');
+							     botonRadio('d39');
+								 
+								descripcion('Realiza los procedimientos de acuerdo con lo establecido y atendiendo las normas de seguridad.');
+							     botonRadio('d40');
+								 
+								descripcion('Cumple con las normas de higiene y seguridad industrial, bioseguridad, seguridad y salud en el trabajo, manejo de residuos hospitalarios y seguridad del paciente.');
+							     botonRadio('d41');
+								 
+								 descripcion('Identifica situaciones de riesgo potencial y sugiere acciones de prevención y mejoramiento.');
+							     botonRadio('d42');
+								 
+								descripcion('Realiza seguimiento a la información, detecta datos erróneos o ausentes y busca la información  que le permita mantener métodos de trabajo seguros y efectivos.');
+							     botonRadio('d43');
+								 
+							?>						
+							
+						</div>
+                    </div> 
+					
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+		<div class="content-wrapper">
+          <div class="row">			
+            <div class="col-12 grid-margin">
+              <div class="card">
+                <div class="card-body">   
+				<h3 class="">Personales 25%</h3>	
+				  <br> 
+					<div class="row">						
+					  <h4 class="">Asertividad 10%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
 								encabezadosRespuestas();
 								descripcion('Motiva en forma positiva y constructiva, resalta lo potenciable y anima a las demás personas a lograr sus metas.');
-							     botonRadio('d28');
-								 
-								descripcion('Pensamiento orientado hacia el autorespeto para influir positivamente en los demás.');
-							     botonRadio('d29');
+							     botonRadio('d44');
 								 
 								descripcion('Expresa lo que quiere y necesita decir,  en el momento, lugar, forma y persona adecuada, con el propósito de que se entienda que está sucediendo, su impacto y consecuencias.');
-							     botonRadio('d30');
+							     botonRadio('d45');
 								 
 								descripcion('Es capaz de decir no sin ser agresivo ni asumir posiciones pasivas.');
-							     botonRadio('d31');
+							     botonRadio('d46');
 								 
 								descripcion('Conoce sus derechos y reconoce el hecho que llegan hasta donde empiezan los derechos de los demás.');
-							     botonRadio('d32');
+							     botonRadio('d47'); 
+								
 							?>
 						</div>
                     </div>                     
@@ -431,78 +525,75 @@ input[type=radio]{
 							<?php
 								encabezadosRespuestas();								
 								descripcion('Fortalece la imagen institucional a través de su presentación personal.');
-							     botonRadio('d33');
+							     botonRadio('d48');
 								 
 								descripcion('Tiene un impacto positivo en los usuarios.');
-							     botonRadio('d34');
+							     botonRadio('d49');
 								 
 								descripcion('Establece relaciones satisfactorias con los clientes internos y externos.');
-							     botonRadio('d35');
+							     botonRadio('d50');
 								 
 								descripcion('Es cordial en el trato, educado y abierto a escuchar a otros.');
-							     botonRadio('d36');
+							     botonRadio('d51');
 								 
 								descripcion('Es puntual a la hora de ingreso a la institución.');
-							     botonRadio('d37');
+							     botonRadio('d52');
 							?>
 						</div>
                     </div> 	
 					<br>                 
                     <div class="row">						
-					  <h4>Confidencialidad 10%</h4 >	
+					  <h4>Confidencialidad 5%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
 								encabezadosRespuestas();
 								descripcion('Evita que personas no autorizadas puedan acceder a la información que está  bajo su responsabilidad , y utiliza técnicas de control de acceso a la información.');
-							     botonRadio('d38');
+							     botonRadio('d53');
 								 
-								descripcion('Asegura la protección de la información, con base en disposiciones legales o criterios estratégicos, 
-								  de información privada, tal como datos de la nómina de los empleados, documentos internos sobre estrategias, 
-								  situaciones inusuales en el estado de salud de los usuarios, guías y protocolos  que son requeridos en la toma 
-								  de decisiones. ');
-							     botonRadio('d39');
+								descripcion('Asegura la protección de la información, con base en disposiciones legales o criterios estratégicos, de información privada, tal como datos de la nómina de los empleados, documentos internos sobre estrategias, situaciones inusuales en el estado de salud de los usuarios, guías y protocolos  que son requeridos en la toma de decisiones.');
+							     botonRadio('d54');
 								 
 								descripcion('Es capaz de diferenciar o identificar que hace público y que no.');
-							     botonRadio('d40');
+							     botonRadio('d55');
 							?>							
 						</div>
-                    </div> 
+                    </div>
 					<br>                 
                     <div class="row">						
-					  <h4>Racionalidad en el uso de los recursos 10%</h4 >	
+					  <h4>Racionalidad en el uso de los recursos 5%</h4 >	
 						<div class="row">
 							<div class="col-6 row">								
 							</div>
 							<?php
 								encabezadosRespuestas();
 								descripcion('Utiliza en forma óptima los recursos humanos, físicos, tecnológicos y financieros.');
-							     botonRadio('d41');
+							     botonRadio('d56');
 								 
 								descripcion('Utiliza racionalmente los servicios públicos en la institución.');
-							     botonRadio('d42');
+							     botonRadio('d57');
 								 
 								descripcion('Recicla los insumos y demás elementos, de acuerdo a las políticas institucionales.');
-							     botonRadio('d43');
+							     botonRadio('d58');
 								 
-								descripcion('Realiza las cosas bien desde el principio, evitando reprocesos y costos de no calidad.');
-							     botonRadio('d44');
+								 descripcion('Realiza las cosas bien desde el principio, evitando reprocesos y costos de no calidad.');
+							     botonRadio('d59');
 								 
 								descripcion('Solicita los insumos realmente necesarios para cumplir con sus tareas.');
-							     botonRadio('d45');
+							     botonRadio('d60');
 								 
 								descripcion('Cumple con sus compromisos en el tiempo señalado.');
-							     botonRadio('d46');
-							?>
+							     botonRadio('d61');
+							?>							
 						</div>
                     </div>
+					
                 </div>
               </div>
             </div>
           </div>
         </div>
-		<!-- FIN DE GRUPO PERSONALES -->
 
 			<div>	
 				<button type="submit" class="btn btn-inverse-success btn-rounded btn-fw" style="position: relative; left: 50%;">Guardar

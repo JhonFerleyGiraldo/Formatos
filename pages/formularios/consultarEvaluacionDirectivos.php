@@ -33,7 +33,7 @@ session_start();
       
       <div class="navbar-menu-wrapper d-flex align-items-center"> 
 	
-		<h2>EVALUACIÓN DEL DESEMPEÑO CARGOS NO DIRECTIVOS</h2>       
+		<h2>EVALUACIÓN DEL DESEMPEÑO CARGOS DIRECTIVOS</h2>       
 
       </div>
 	  
@@ -43,7 +43,7 @@ session_start();
     
       <!-- partial -->
       <div class="main-panel col-lg-12">
-	  <form class="form-sample" action="guardarEvaluacion.php?detalle=<?php echo $datosBasicos[6]; ?>" method="POST">   
+	  <form class="form-sample" action="guardarEvaluacion.php?detalle=<?php echo $datosBasicos[6]; ?>&guardar=directivo" method="POST">   
 		<!-- CABECERA AUTOEVALUACION -->
         <div class="content-wrapper">
           <div class="row">    
@@ -97,7 +97,7 @@ session_start();
                           <label class="col-sm-3 col-form-label">Periodo evaluado:</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" readonly name="periodoEvaluado" value="<?php echo getPeriodo($datosBasicos[2]); ?>"/>
-							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
+							<input type="hidden" class="form-control" name="tipoFormulario" value="D"/>
 							<input type="hidden" class="form-control" name="evaluador" value="2"/>
                           </div>
                         </div>

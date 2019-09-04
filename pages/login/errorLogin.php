@@ -18,13 +18,13 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Validación</h4>
+          <h4 class="modal-title">Validaci&oacute;n</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
         <!-- Modal body -->
         <div class="modal-body">
-          Usuario o contraseña incorrectos, favor validar.
+          Usuario o contrase&ntilde;a incorrectos, favor validar.
         </div>
         
         <!-- Modal footer -->

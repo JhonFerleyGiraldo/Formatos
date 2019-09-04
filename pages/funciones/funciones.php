@@ -6,12 +6,19 @@
 
         switch($cargoUsuario){
 
-            case 1:
-                $codigoCargoJefe=2;
+            case 2: //auxiliar
+                $codigoCargoJefe=9;//Enfermero(a)
             break;
-            case 2:
-                $codigoCargoJefe=3;
+            case 9://Enfermero(a)
+                $codigoCargoJefe=39;//Director cientÍfico
             break;
+            case 40://Ingeniero de Sistemas
+                $codigoCargoJefe=4;//Director (a) administrativa y financiera
+                break;
+            case 33://Asistente de sistemas
+                $codigoCargoJefe=40;//Ingeniero de Sistemas
+                break;    
+            
         }
         try{
             $consulta="SELECT * FROM tbl_persona WHERE cargo='$codigoCargoJefe'";
@@ -48,7 +55,7 @@
                 if($valores["descripcion"]==$anioActual){
                     $select="selected";
                 }else{
-                    $select="";
+                    $select="disabled";
                 }    
                 
             echo '<option  ' . $select . ' value="'.$valores['id'].'">'.$valores['descripcion'] . '</option>';
@@ -209,6 +216,37 @@
             return false;
         }
 
+    }
+
+
+    function GetIsDirectivo($documento){
+        try{
+            include("../conexion/mysql.php");
+
+            $consulta=" SELECT 	
+                            isDirectivo           
+                        FROM 	tbl_persona
+                        WHERE 
+                            documento='$documento'
+                            ";
+            
+            $resultado= mysqli_query($link ,$consulta);
+            
+            $bandera="";
+                    
+            while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+            $bandera=$valores["isDirectivo"];
+
+            }
+
+            return $bandera;
+                    
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
     }
 
 
