@@ -33,9 +33,11 @@ if(!isset($_SESSION["usuario"])){
 
             
             //si el perfil es 2 es porque es un jefe
-        }else if($_SESSION["perfil"]==2){
+        }else if($_SESSION["perfil"]==2 || $_SESSION["perfil"]==1){
 			//include("../formularios/inicioJefe.php");
 			header("location:../formularios/inicioJefe.php");
+        }else{
+            echo "No tiene un perfil valido";
         }
 
     }    

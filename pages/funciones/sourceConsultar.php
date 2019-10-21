@@ -16,7 +16,11 @@
 		$tipoFormulario = 2;
 	  }
 	 
-	 $idDetalle=$_GET["id"];
+	 
+		$idDetalle=$_GET["id"];
+	  
+
+	
 	 
 	 //Consultar datos básicos del formulario 
 	 $consulta = "	SELECT empleado, jefe, periodo, fechaEva, fechaUltima, formularioTipoCargo,id

@@ -103,8 +103,14 @@ $("#cerrarModal").click(function(){
 
 <?php
 if(ValidarEvaluacionPorPeriodo(obtenerCodigoUsuario($_SESSION["usuario"]),date('Y'))){
-	echo "  <script>	
+	echo "  <script>
+				//Abrir modal es usado para cerrarle la aplicacion al usuario
+				//se comenta ya que lo que se va a realizar es mostrarle al usuario la encuesta realizada pero bloqueada
 				//abrirModal();
+
+				//Redireccionamos al formulario para ver la evaluacion realizada en el periodo
+				window.location.href='visualizarEvaluacionDirectivos.php?usuario=" . $_SESSION['usuario'] . "';
+
 			</script>";
 }
 
@@ -192,7 +198,7 @@ if(ValidarEvaluacionPorPeriodo(obtenerCodigoUsuario($_SESSION["usuario"]),date('
                            
 							<select class="form-control inputs" required name="documentoJefe">
 							<?php
-								TraerJefes($_SESSION["cargo"]);
+								TraerJefes($_SESSION["cargo"],$_SESSION['usuario']);
 							?>
 							</select>
 						  </div>

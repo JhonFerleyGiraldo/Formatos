@@ -56,7 +56,7 @@ include("../conexion/mysql.php");
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Evaluación-Login</title>
+    <title>Evaluaci&oacute;n-Login</title>
     <link rel="stylesheet" type="text/css" href="login.css">
     <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
@@ -88,7 +88,7 @@ include("../conexion/mysql.php");
     <nav class="navbar navbar-expand-lg navbar-expand-sm navbar-expand-auto navbar-dark bg-dark">
       <img class="logo" src="../../images/logoUCI.png" alt="raee">
       <div class="collapse navbar-collapse" >
-          <p class="navbar-nav ml-auto  mx-auto" style="color:#FFFFFF;font-size:20px;">EVALUACIÓN DE DESEMPEÑO</p>
+          <p class="navbar-nav ml-auto  mx-auto" style="color:#FFFFFF;font-size:20px;">EVALUACI&Oacute;N DE DESEMPEÑO</p>
       </div>
     </nav>
 
@@ -106,12 +106,12 @@ include("../conexion/mysql.php");
     <form id="FormLogin" method="POST">
       <input required type="text" id="login" class="fadeIn second" name="user" placeholder="login">
       <input required type="password" id="password" class="fadeIn third" name="pass" placeholder="password">
-      <input type="submit" class="fadeIn fourth" value="Log In">
+      <input type="submit" class="fadeIn fourth" value="Ingresar">
     </form>
 
     <!-- Remind Passowrd -->
     <div id="formFooter">
-      <!--<a class="underlineHover" href="#">Forgot Password?</a>-->
+      <!--<a class="underlineHover" href="#">¿Ver autoevaluación?</a>-->
     </div>
 
   </div>

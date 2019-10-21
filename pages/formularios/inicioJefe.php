@@ -36,7 +36,7 @@
   <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+      <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center col-lg-2">
         <a class="navbar-brand brand-logo" >
           <img src="../../images/logoUCI.png" alt="logo" />
         </a>
@@ -44,7 +44,7 @@
           <img src="../../images/logoUCI.png" alt="logo" />
         </a>
       </div>
-      <div class="navbar-menu-wrapper d-flex align-items-center">
+      <div class="navbar-menu-wrapper d-flex align-items-center ">
         <ul class="navbar-nav navbar-nav-left header-links d-none d-md-flex">
           <li class="nav-item">
             <a href="#" class="nav-link">Gestión evaluaciones de desempeño
@@ -59,7 +59,7 @@
               <i class="mdi mdi-bookmark-plus-outline"></i>Score</a>
           </li>-->
         </ul>
-        <ul class="navbar-nav navbar-nav-right">
+        <ul class="navbar-nav navbar-nav-right ">
           <!--<li class="nav-item dropdown">
             <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <i class="mdi mdi-file-document-box"></i>
@@ -170,12 +170,12 @@
               </a>
             </div>
           </li>-->
-          <li class="nav-item dropdown d-none d-xl-inline-block">
+          <li class="nav-item dropdown d-none d-xl-inline-block d-lg-inline-block">
             <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
               <span class="profile-text">Hola, <?php echo  $_SESSION["nombreUsuario"]; ?> !</span>
               <img class="img-xs rounded-circle" src="../../images/faces/imgJefe.png" alt="Profile image">
             </a>
-            <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+            <div class="dropdown-menu dropdown-menu-right navbar-dropdown " aria-labelledby="UserDropdown">
               <!--<a class="dropdown-item p-0">
                 <div class="d-flex border-bottom">
                   <div class="py-3 px-4 d-flex align-items-center justify-content-center">
@@ -199,7 +199,7 @@
                 Check Inbox
               </a>-->
               <a href="../login/index.php" class="dropdown-item">
-                Sign Out
+                Salir
               </a>
             </div>
           </li>
@@ -210,9 +210,9 @@
       </div>
     </nav>
     <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
+    <div class="container-fluid page-body-wrapper ">
       <!-- partial:../../partials/_sidebar.html -->
-      <nav class="sidebar sidebar-offcanvas" id="sidebar">
+      <nav class="sidebar sidebar-offcanvas col-lg-2 " id="sidebar">
         <ul class="nav">
           <li class="nav-item nav-profile">
             <div class="nav-link">
@@ -221,16 +221,67 @@
                   <img src="../../images/faces/imgJefe.png" alt="profile image">
                 </div>
                 <div class="text-wrapper">
-                  <p class="profile-name"><?php echo $_SESSION["nombreUsuario"]; ?></p>
+                  <p class="profile-name">
+                  <?php 
+                      $nombreUsu=$_SESSION["nombreUsuario"];
+                      $cantidadLet=strlen($_SESSION["nombreUsuario"]);
+
+                      if($cantidadLet>20){
+                        echo substr($nombreUsu, 0, 20) . "...";
+                      }else{
+                        echo $nombreUsu;
+                      } 
+                      
+                  ?>
+                  </p>
                   <div>
-                    <small class="designation text-muted"><?php echo getNombreCargo($_SESSION["cargo"]); ?></small>
+                    <small class="designation text-muted">
+                    <?php 
+                        $nombreCargo=getNombreCargo($_SESSION["cargo"]);
+                        $cantidadLet=strlen(getNombreCargo($_SESSION["cargo"]));
+
+                        if($cantidadLet>25){
+                          echo substr($nombreCargo, 0, 25) . "...";
+                        }else{
+                          echo $nombreCargo;
+                        } 
+                        
+                    ?>
+                    </small>
                     <span class="status-indicator online"></span>
                   </div>
                 </div>
               </div>
-              <a  href="../formularios/<?php if(GetIsDirectivo($_SESSION['usuario'])){echo 'evaluacionDirectivos.php';}else{echo 'evaluacionNoDirectivos.php';} ?>" style="text-decoration:none;"><button class="btn btn-success btn-block">Autoevaluación
-                <i class="mdi mdi-plus"></i>
-              </button></a>
+                <a  href="../formularios/<?php if(GetIsDirectivo($_SESSION['usuario'])){echo 'evaluacionDirectivos.php';}else{echo 'evaluacionNoDirectivos.php';} ?>" style="text-decoration:none;">
+                  <button class="btn btn-success btn-block">Autoevaluación
+                    <i class="mdi mdi-plus"></i>
+                  </button>
+                </a>
+
+                <?php
+                  if($_SESSION["perfil"]==1):
+                ?>
+
+                <br>
+                <a  href="" style="text-decoration:none;">
+                  <button class="btn btn-success btn-block">Imprimir Eva.
+                  </button>
+                </a>
+                <br>
+                <a  href="crearPersonas.php" style="text-decoration:none;">
+                  <button class="btn btn-success btn-block">Usuario
+                    <i class="mdi mdi-plus"></i>
+                  </button>
+                </a>
+                <br>
+                <a  href="" style="text-decoration:none;">
+                  <button class="btn btn-success btn-block">Reportes
+                  </button>
+                </a>
+                
+                <?php
+                  endif;
+                ?>
             </div>
           </li>
           <!-- se comenta el menu que no se necesita
@@ -288,7 +339,7 @@
               <i class="menu-arrow"></i>
             </a>
             -->
-            <div class="collapse" id="auth">
+            <div class="collapse " id="auth">
               <ul class="nav flex-column sub-menu">
                 <li class="nav-item">
                   <a class="nav-link" href="../../pages/samples/blank-page.html"> Blank Page </a>
@@ -311,7 +362,7 @@
         </ul>
       </nav>
       <!-- partial -->
-      <div class="main-panel">
+      <div class="main-panel col-lg-10">
         <div class="content-wrapper">
           <div class="row">
             <!--<div class="col-lg-6 grid-margin stretch-card">
@@ -382,23 +433,24 @@
 			
 			<!-- Tabla a mostrar al usuario-->
 			<!-- estas son las clases que tenia el div col-lg-6 grid-margin stretch-card-->
-            <div class=" grid-margin stretch-card">
+            <div class=" grid-margin stretch-card  col-lg-12">
               <div class="card">
-                <div class="card-body">
+                <div class="card-body table-responsive">
                   <h4 class="card-title">Personal pendiente para evaluación</h4>
                   <!--<p class="card-description">
                     Add class
                     <code>.table-hover</code>
                   </p>-->
-                  <div class="table-responsive">
-                    <table class="table table-hover">
+                  <div class="">
+                    <table  class="table table-striped" cellspacing="2">
                       <thead>
                         <tr>
                           <th>Documento</th>
                           <th>Nombre</th>
-                          <th>Cargo</th>
+                          <!--<th>Cargo</th>-->
                           <th>Periodo</th>
                           <th>Fecha Eva.</th>
+                          <th>Resultado</th>
                           <th>Estado</th>
                         </tr>
                       </thead>
@@ -412,25 +464,52 @@
                         
                           while ($valores = mysqli_fetch_array($resultado)) {
 
+
+                            $empleado=$valores[2];
+                            $cantidadLet=strlen($valores[2]);
+
+                            if($cantidadLet>20){
+                              $empleado= substr($empleado, 0, 20) . "...";
+                            }
+
+
                            echo "<tr>
                                   <td>$valores[1]</td>
-                                  <td>$valores[2]</td>
-                                  <td class=''> $valores[3]</td>
+                                  <td>$empleado</td>
+                                  <!--<td class=''> $valores[3]</td>-->
                                   <td class=''> $valores[5]</td>
-                                  <td class=''> $valores[6]</td>
-                                  <td>"; 
+                                  <td class=''> $valores[6]</td>";
+                                
+                                  if($valores[9]==NULL){
+                                    echo "<td>N/E</td>";
+                                  }else if($valores[9]>=3 && $valores[9]<=5){
+                                    echo "<td style='background-color: #82FC5E'>$valores[9]</td>";
+                                  }else if($valores[9]>=0 && $valores[9]<=3){ 
+                                    echo "<td style='background-color: #82FC5E'>$valores[9]</td>";
+                                  }
+                                  
 
-                                  if(GetIsDirectivo($valores[1])){
+                                  
+                                  
+                                  echo "<td>"; 
+
+                                  $esDirectivo=GetIsDirectivo($valores[1]);
+
+                                  if($esDirectivo){
                                     $pagina= 'consultarEvaluacionDirectivos.php';
                                   }else{
                                     $pagina= 'consultarEvaluacionNoDirectivos.php';
                                   }
                                     
                                     //Validamos si ya esta revisado
-                                    if($valores[8]==0){
+                                    if($valores[8]==1){
                                       echo "<a href='$pagina?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]'><label class='badge badge-warning'>Pendiente</label></a>";
+                                    }else if($valores[8]==2){
+                                      echo "<a><label class='badge badge-danger'>Plan de mejora</label></a>";
+                                    }else if($valores[8]==3){
+                                      echo "<a href='comprobanteEvaluacion.php?id=$valores[0]&documento=$valores[1]&periodo=$valores[4]&esDirectivo=$esDirectivo'><label class='badge badge-success'>Finalizado</label></a>";
                                     }else{
-                                      echo "<label class='badge badge-success'>Evaluado</label>";
+                                      echo "No encontrado";
                                     }
                                     
                                   echo "</td>
@@ -1045,7 +1124,7 @@
         <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019
-              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved.</span>
+              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved. &nbsp;&nbsp;&nbsp; Desarrollado por el área de sistemas.</span> 
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Recursos Humanos
              
             </span>

@@ -1,25 +1,17 @@
 <?php
-    function TraerJefes($cargoUsuario){
+    function TraerJefes($cargoUsuario,$documentoUsuario){
         include("../conexion/mysql.php");
         
         $codigoCargoJefe=null;
 
-        switch($cargoUsuario){
+        $consulta="SELECT jefeInmediato FROM tbl_persona WHERE cargo='$cargoUsuario' AND documento='$documentoUsuario'";
+        $resultado=mysqli_query($link,$consulta);
 
-            case 2: //auxiliar
-                $codigoCargoJefe=9;//Enfermero(a)
-            break;
-            case 9://Enfermero(a)
-                $codigoCargoJefe=39;//Director cientÍfico
-            break;
-            case 40://Ingeniero de Sistemas
-                $codigoCargoJefe=4;//Director (a) administrativa y financiera
-                break;
-            case 33://Asistente de sistemas
-                $codigoCargoJefe=40;//Ingeniero de Sistemas
-                break;    
-            
+        while($valores=mysqli_fetch_array($resultado)){
+            $codigoCargoJefe=$valores["jefeInmediato"];
         }
+        //echo "<script>alert('$codigoCargoJefe')</script>"; 
+        
         try{
             $consulta="SELECT * FROM tbl_persona WHERE cargo='$codigoCargoJefe'";
             
@@ -66,7 +58,47 @@
 
     }
 
+    function getIdDetalleEvaluacion($usuario,$periodo){
+        try{
+            
+            include("../conexion/mysql.php");
 
+            $consulta="SELECT id FROM tbl_detalle WHERE empleado='$usuario' AND periodo='$periodo'";
+            
+            $resultado= mysqli_query($link ,$consulta);
+                   
+            while ($valores = mysqli_fetch_array($resultado)) {
+                return $valores["id"];
+            }            
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+        }
+    }
+
+    /*Funcion que trae el codigo del periodo */
+    function getCodigoPeriodo($periodo){
+        try{
+
+            include("../conexion/mysql.php");
+
+            $consulta="SELECT id FROM tbl_periodo WHERE descripcion='$periodo'";
+            
+            $resultado= mysqli_query($link ,$consulta);
+                   
+            while ($valores = mysqli_fetch_array($resultado)) {
+       
+                return $valores["id"];
+
+            }            
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+        } 
+    }
+
+
+    /*Trae los datyos del dormulario */
     function tipoFormulario($tipo){
         try{
             include("../conexion/mysql.php");
@@ -85,6 +117,7 @@
         }
     }
 
+    /*Funcion que trae el codigo del usuario */
     function obtenerCodigoUsuario($documento){
         try{
             include("../conexion/mysql.php");
@@ -108,6 +141,7 @@
         }
     }
 
+    /*Funcion encargada de traer la cantidad de descriptores */
     function getCantidadDescriptores(){
         try{
             include("../conexion/mysql.php");
@@ -131,7 +165,7 @@
         }
     }
 
-
+    /*Funcion encargada de calidar si la persina ya realizo la evaluacion este periodo */
     function ValidarEvaluacionPorPeriodo($usuario,$periodoActual){
         try{
             include("../conexion/mysql.php");
@@ -156,7 +190,7 @@
         }
     }
 
-
+    /*Funcion encargada de traer el nombre del cargo */
     function getNombreCargo($codigoCargo){
         try{
             include("../conexion/mysql.php");
@@ -181,6 +215,8 @@
         }
     }
 
+    /*Funcion encargada de traer las evaluaciones
+    que debe revisar el jefe a cargo */
     function getListadoEvaluacionesxJefe($jefe){
         try{
             include("../conexion/mysql.php");
@@ -193,8 +229,9 @@
                             PE.id as 'codPeriodo',
                             PE.descripcion as 'periodo',
                             D.fechaEva as 'fecha',
-                            D.fechaUltima  as 'estado',
-                            D.revixJefe as 'revisado'           
+                            D.fechaUltima  as 'fechaU',
+                            D.estado as 'estado',
+                            D.resultado as 'resultado'
                         FROM 	tbl_detalle as D inner join tbl_evaluacion as E
                                 ON E.detalle=D.id
                                 inner join tbl_usuario as U on D.empleado=U.id
@@ -219,6 +256,9 @@
     }
 
 
+    /*
+        Funcion encargada de validar si la persona es directiva o no
+    */
     function GetIsDirectivo($documento){
         try{
             include("../conexion/mysql.php");
@@ -242,6 +282,172 @@
 
             return $bandera;
                     
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /*Funcion encargada de mostrar el porcentaje del descriptor */
+    function GetPorcentajeDescriptor($descriptor){
+
+        try{
+            include("../conexion/mysql.php");
+
+            $consulta=" SELECT COM.id,COM.porcentaje
+                        FROM tbl_descriptor AS DP INNER JOIN tbl_competencia AS COM ON DP.competencia=COM.id
+                        WHERE DP.id='$descriptor'
+                        GROUP BY COM.id,COM.porcentaje
+                            ";
+            
+            $resultado= mysqli_query($link ,$consulta);
+           
+            
+            $competencia=0;
+            $porcentajeCompetencia=0;
+                    
+            while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+                $competencia=$valores["id"];
+                $porcentajeCompetencia=$valores["porcentaje"];
+                
+
+            }
+
+
+            $consulta=" SELECT COUNT(DP.id) AS 'cantidadDescriptores'
+                        FROM tbl_descriptor AS DP INNER JOIN tbl_competencia AS COM ON DP.competencia=COM.id
+                        WHERE COM.id='$competencia'
+
+                            ";
+            
+            $resultado= mysqli_query($link ,$consulta);
+
+
+            $cantidadDescriptores=0;
+                    
+            while ($valores = mysqli_fetch_array($resultado)) {
+                                    
+                $cantidadDescriptores=$valores["cantidadDescriptores"];
+                
+
+            }
+
+           
+
+            return ($porcentajeCompetencia/$cantidadDescriptores);
+                    
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+
+    }
+
+    /*Funcion encargada de traer el valor calificado
+    para cada descriptor */
+    function GetValorCalificadoDescriptor($detalle,$descriptor,$evaluador){
+        try{
+
+            include("../conexion/mysql.php");
+
+            $consulta="CALL SP_consultarResultadoEvaluacionXdescriptor('$detalle','$descriptor','$evaluador')";
+
+            $resultado= mysqli_query($link ,$consulta);
+
+            $valor=0;
+
+            while ($valores = mysqli_fetch_array($resultado)) {
+
+                $valor=$valores["valor"];
+                
+
+            }
+
+            return $valor;
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /*Funcion usada para traer el porcentaje de calificacion por
+    cada competencia */
+    function GetPorcentajeCalificadoPorCompetencia($detalle,$competencia){
+        try{
+
+            include("../conexion/mysql.php");
+
+            $consulta="CALL SP_PorcentajeCalificadoPorCompetencia('$detalle','$competencia')";
+
+            $resultado= mysqli_query($link ,$consulta);
+
+            $valor=0;
+
+            while ($valores = mysqli_fetch_array($resultado)) {
+
+                $valor=$valores["porcentajeEvaluado"];
+                
+
+            }
+
+            return $valor;
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /*Funcion encargada de traer el encabezado de la tabla para comprobante
+    de la evaluacion
+     */
+    function GetEncabezadoEvaluacion($detalle){
+        try{
+
+            include("../conexion/mysql.php");
+
+            $consulta="CALL SP_consultarDatosEncabezadoEvaluacion('$detalle')";
+
+            $resultado= mysqli_query($link ,$consulta);
+
+            return $resultado;
+
+        }catch(Exception $e){
+            echo "Error " . $e->getMessage();
+            return false;
+        }
+    }
+
+    /*Funcion enfargada de traer la ultima fecha en la que la persona realizo la evaluacion*/
+    function GetFechaUltimaEvaluacion($detalle){
+        try{
+
+            include("../conexion/mysql.php");
+
+            $consulta=" SELECT		DE.fechaEva AS 'fecha'
+                        FROM		tbl_detalle AS DE
+                        WHERE DE.id<>'$detalle'
+                        ORDER BY 	DE.fechaUltima desc
+                        LIMIT 1";
+
+            $resultado= mysqli_query($link ,$consulta);
+        
+
+            $valor=0;
+
+            while ($valores = mysqli_fetch_array($resultado)) {
+
+                $valor=$valores["fecha"];
+                
+
+            }
+
+            return $valor;
+
 
         }catch(Exception $e){
             echo "Error " . $e->getMessage();

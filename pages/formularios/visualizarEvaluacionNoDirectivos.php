@@ -1,7 +1,7 @@
 <?php
 session_start();
  include '../conexion/mysql.php';
- include '../funciones/sourceConsultar.php';
+ include '../funciones/sourceVisualizar.php';
 ?>
 
 <!DOCTYPE html>
@@ -33,7 +33,7 @@ session_start();
       
       <div class="navbar-menu-wrapper d-flex align-items-center"> 
 	
-		<h2>EVALUACIÓN DEL DESEMPEÑO CARGOS DIRECTIVOS</h2>       
+		<h2>EVALUACIÓN DEL DESEMPEÑO CARGOS NO DIRECTIVOS</h2>       
 
       </div>
 	  
@@ -43,7 +43,7 @@ session_start();
     
       <!-- partial -->
       <div class="main-panel col-lg-12">
-	  <form class="form-sample" action="guardarEvaluacion.php?detalle=<?php echo $datosBasicos[6]; ?>&guardar=directivo" method="POST">   
+	
 		<!-- CABECERA AUTOEVALUACION -->
         <div class="content-wrapper">
           <div class="row">    
@@ -80,7 +80,7 @@ session_start();
                         <div class="form-group row">
                           <label class="col-sm-3 col-form-label">Nombre completo del evaluador y/o jefe inmediato:</label>
                           <div class="col-sm-5">
-                            <input type="text" class="form-control" readonly name="nombreJefe" value="<?php echo $_SESSION["nombreUsuario"]; ?>"/>
+                            <input type="text" class="form-control" readonly name="nombreJefe" value="<?php echo  getNombreUsuario(getDocumentoUsuario($datosBasicos[1]));  ?>"/>
                           </div>
                         </div>
                       </div>
@@ -97,7 +97,7 @@ session_start();
                           <label class="col-sm-3 col-form-label">Periodo evaluado:</label>
                           <div class="col-sm-9">
                             <input type="text" class="form-control" readonly name="periodoEvaluado" value="<?php echo getPeriodo($datosBasicos[2]); ?>"/>
-							<input type="hidden" class="form-control" name="tipoFormulario" value="D"/>
+							<input type="hidden" class="form-control" name="tipoFormulario" value="N"/>
 							<input type="hidden" class="form-control" name="evaluador" value="2"/>
                           </div>
                         </div>
@@ -115,20 +115,30 @@ session_start();
 			construirFormulario($datosBasicos[6]);
 		?>
 
-		<div>	
-			<button type="submit" class="btn btn-inverse-success btn-rounded btn-fw" style="position: relative; left: 50%;">Guardar
+<?php if($_SESSION["perfil"]==1 || $_SESSION["perfil"]==2): ?>
+    <div>	
+			<a href="../formularios/inicioJefe.php"><button type="submit" class="btn btn-inverse-success btn-rounded btn-fw" style="position: relative; left: 50%;">Cerrar consulta
 				<i class="mdi mdi-check"></i>
-			</button>
+			</button></a>
+		</div>
+    <?php else: ?>
+
+    <div>	
+			<a href="../login/index.php"><button type="submit" class="btn btn-inverse-success btn-rounded btn-fw" style="position: relative; left: 50%;">Cerrar consulta
+				<i class="mdi mdi-check"></i>
+			</button></a>
 		</div>
 
+    <?php endif;?>
+
 					
-	</form>
+
         <!-- content-wrapper ends -->
         <!-- partial:../../partials/_footer.html -->
         <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019
-              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved. &nbsp;&nbsp;&nbsp; Desarrollado por el área de sistemas.</span>
+              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved.  &nbsp;&nbsp;&nbsp; Desarrollado por el área de sistemas.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Recursos Humanos
             </span>
           </div>

@@ -70,12 +70,7 @@
 
 			$codigoJefe=obtenerCodigoUsuario($_SESSION["usuario"]);
 
-			//Actualiza el detalle de la evaluacion
-			$consulta="UPDATE tbl_detalle set fechaUltima=NOW(),revixJefe=1
-						WHERE id='$detalleId' AND jefe='$codigoJefe'";
-
-			mysqli_query($link, $consulta);//or die('A error occured: insertando en la tabla Detalles');
-			echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
+			
 
 
 
@@ -91,27 +86,65 @@
 				$descriptor = 1;//se inicia en 1 ya que es el primer registro en la tabla descriptores
 			}
 			
+			$sumaResultado=0;
+
 			foreach ($descriptores as $registro) {
 
-			$valor = $registro;		
+				$porcentajeDescriptor=0;
 
-			$consulta = "INSERT INTO tbl_evaluacion (detalle, descriptor, evaluador, valor)
-				VALUES ('$detalleId', '$descriptor', '$evaluador', '$valor')";
-		 
-			mysqli_query($link,$consulta);// or die('A error occured: Insertando evaluacion');
+				$valor = $registro;		
+
+				$porcentajeDescriptor=GetPorcentajeDescriptor($descriptor);
+				
+				$sumaResultado=$sumaResultado+$valor*($porcentajeDescriptor/100);
+
+				$porcentajeEvaluado=$valor*($porcentajeDescriptor/100);
+
+				$consulta = "INSERT INTO tbl_evaluacion (detalle, descriptor, evaluador, valor,porcenEvaluado)
+					VALUES ('$detalleId', '$descriptor', '$evaluador', '$valor','$porcentajeEvaluado')";
+			
+				mysqli_query($link,$consulta);// or die('A error occured: Insertando evaluacion');
+				//echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
+
+				//echo "$contador. - $registro.<br />\n";
+				$descriptor = $descriptor + 1;
+			}
+
+			$estado=0;
+			if($sumaResultado>=3){
+				$estado=3;
+			}else{
+				$estado=2;
+			}
+
+
+			$fechaUltima=GetFechaUltimaEvaluacion($detalleId);
+
+				
+			if($fechaUltima==0){
+				//Actualiza el detalle de la evaluacion
+				$consulta="UPDATE tbl_detalle set fechaUltima=NULL,estado='$estado',resultado='$sumaResultado'
+				WHERE id='$detalleId' AND jefe='$codigoJefe'";
+			}else{
+				//Actualiza el detalle de la evaluacion
+				$consulta="UPDATE tbl_detalle set fechaUltima='$fechaUltima',estado='$estado',resultado='$sumaResultado'
+				WHERE id='$detalleId' AND jefe='$codigoJefe'";
+			}
+
+			
+
+			mysqli_query($link, $consulta);//or die('A error occured: insertando en la tabla Detalles');
 			echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
 
-			//echo "$contador. - $registro.<br />\n";
-			$descriptor = $descriptor + 1;
-			}
+			echo "Resultado:: " . $sumaResultado;
 
 			
 		//si no es porque es una autoevaluacion
 	}else{
 
 			//Inserta los datos generales del formulario
-			$consulta = "INSERT INTO tbl_detalle ( empleado, jefe, periodo, fechaEva, formularioTipoCargo,revixJefe)
-			VALUES ('$usuario', '$jefe', '$periodoEvaluado',NOW(), '$tipoFormulario',0)";			 
+			$consulta = "INSERT INTO tbl_detalle ( empleado, jefe, periodo, fechaEva, formularioTipoCargo,estado)
+			VALUES ('$usuario', '$jefe', '$periodoEvaluado',NOW(), '$tipoFormulario',1)";			 
 
 			mysqli_query($link, $consulta)or die('A error occured: insertando en la tabla Detalles');
 			//echo mysqli_errno($link) . ": " . mysqli_error($link) . "\n";
@@ -205,7 +238,7 @@
       
         <!-- Modal Header -->
         <div class="modal-header">
-          <h4 class="modal-title">Validación</h4>
+          <h4 class="modal-title">Validaci&oacute;n</h4>
           <button type="button" class="close" data-dismiss="modal">&times;</button>
         </div>
         
@@ -216,7 +249,7 @@
         
         <!-- Modal footer -->
         <div class="modal-footer">
-          <button type="button" id="cerrarModal" class="btn btn-success" data-dismiss="modal">Close</button>
+          <button type="button" id="cerrarModal" class="btn btn-success" data-dismiss="modal">Continuar</button>
         </div>
         
       </div>

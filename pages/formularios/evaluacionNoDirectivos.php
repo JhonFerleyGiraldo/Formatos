@@ -102,9 +102,16 @@ $("#cerrarModal").click(function(){
 </html>
 
 <?php
+//Se valida si la persona ya realizo la encuesta para el periodo solicitado
 if(ValidarEvaluacionPorPeriodo(obtenerCodigoUsuario($_SESSION["usuario"]),date('Y'))){
-	echo "  <script>	
+	echo "  <script>
+				//Abrir modal es usado para cerrarle la aplicacion al usuario
+				//se comenta ya que lo que se va a realizar es mostrarle al usuario la encuesta realizada pero bloqueada
 				//abrirModal();
+
+				//Redireccionamos al formulario para ver la evaluacion realizada en el periodo
+				window.location.href='visualizarEvaluacionNoDirectivos.php?usuario=" . $_SESSION['usuario'] . "';
+
 			</script>";
 }
 
@@ -197,7 +204,7 @@ input[type=radio]{
                            
 							<select class="form-control inputs" required name="documentoJefe">
 							<?php
-								TraerJefes($_SESSION["cargo"]);
+								TraerJefes($_SESSION["cargo"],$_SESSION["usuario"]);
 							?>
 							</select>
 						  </div>
@@ -517,7 +524,7 @@ input[type=radio]{
         <footer class="footer">
           <div class="container-fluid clearfix">
             <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © 2019
-              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved.</span>
+              <a href="http://www.serviucis.com/" target="_blank">Serviucis S.A.S</a>. All rights reserved. &nbsp;&nbsp;&nbsp; Desarrollado por el área de sistemas.</span>
             <span class="float-none float-sm-right d-block mt-1 mt-sm-0 text-center">Recursos Humanos
             </span>
           </div>
